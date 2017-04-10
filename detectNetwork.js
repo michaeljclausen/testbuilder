@@ -18,9 +18,14 @@ var detectNetwork = function(cardNumber) {
   	return 'Diner\'s Club';
   }
   if (cardNumber.length === 15 && (prefix === '34' || prefix === '37')) {
-  	return 'American Express'
+  	return 'American Express';
   }
-
+  if (cardNumber.length === 16 && (prefix === '51' || prefix === '52' || prefix === '53' || prefix === '54' || prefix === '55')) {
+  	return 'MasterCard';
+  }
+  if ((cardNumber.length === 13 || cardNumber.length === 16 || cardNumber.length === 19) && prefix.charAt(0) === '4') {
+  	return 'Visa';
+  }
 };
 
 
