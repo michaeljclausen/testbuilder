@@ -26,6 +26,12 @@ var detectNetwork = function(cardNumber) {
   if ((cardNumber.length === 13 || cardNumber.length === 16 || cardNumber.length === 19) && prefix.charAt(0) === '4') {
   	return 'Visa';
   }
+  if ((cardNumber.slice(0,4) === '6011' || cardNumber.slice(0,3) === '644'|| cardNumber.slice(0,3) === '645'|| cardNumber.slice(0,3) === '646'|| cardNumber.slice(0,3) === '647'|| cardNumber.slice(0,3) === '648'|| cardNumber.slice(0,3) === '649' || prefix === '65') && (cardNumber.length === 16 || cardNumber.length === 19)) {
+  	return 'Discover';
+  }
+  if ((cardNumber.slice(0,4) === '5018' || cardNumber.slice(0,4) === '5020' || cardNumber.slice(0,4) === '5038' || cardNumber.slice(0,4) === '6304') && (cardNumber.length >= 12 && cardNumber.length <=19)) {
+  	return 'Maestro';
+  }
 };
 
 
