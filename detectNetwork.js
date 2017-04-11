@@ -23,14 +23,24 @@ var detectNetwork = function(cardNumber) {
   if (cardNumber.length === 16 && (prefix === '51' || prefix === '52' || prefix === '53' || prefix === '54' || prefix === '55')) {
   	return 'MasterCard';
   }
-  if ((cardNumber.length === 13 || cardNumber.length === 16 || cardNumber.length === 19) && prefix.charAt(0) === '4') {
-  	return 'Visa';
-  }
+ 
   if ((cardNumber.slice(0,4) === '6011' || cardNumber.slice(0,3) === '644'|| cardNumber.slice(0,3) === '645'|| cardNumber.slice(0,3) === '646'|| cardNumber.slice(0,3) === '647'|| cardNumber.slice(0,3) === '648'|| cardNumber.slice(0,3) === '649' || prefix === '65') && (cardNumber.length === 16 || cardNumber.length === 19)) {
   	return 'Discover';
   }
   if ((cardNumber.slice(0,4) === '5018' || cardNumber.slice(0,4) === '5020' || cardNumber.slice(0,4) === '5038' || cardNumber.slice(0,4) === '6304') && (cardNumber.length >= 12 && cardNumber.length <=19)) {
   	return 'Maestro';
+  }
+  var prefix6 = parseInt(cardNumber.slice(0, 6));
+  var prefix4 = parseInt(cardNumber.slice(0, 4));
+  var prefix3 = parseInt(cardNumber.slice(0, 3));
+  if (((prefix6 >= 622126 && prefix6 <= 622925) || (prefix4 >= 6282 && prefix4 <= 6288) || (prefix3 >= 624 && prefix3 <= 626)) && (cardNumber.length >= 16 && cardNumber.length <= 19)) {
+  	return 'China UnionPay';
+  }
+  if ((prefix4 === 4903 || prefix4 === 4905 || prefix4 === 4911 || prefix4 === 4936 || prefix4 === 6333 || prefix4 === 6759 || prefix6 === 564182 || prefix6 === 633110) && (cardNumber.length === 16 || cardNumber.length === 18 || cardNumber.length === 19)) {
+  	return 'Switch';
+  }
+  if ((cardNumber.length === 13 || cardNumber.length === 16 || cardNumber.length === 19) && prefix.charAt(0) === '4') {
+  	return 'Visa';
   }
 };
 

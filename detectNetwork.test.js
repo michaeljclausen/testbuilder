@@ -187,5 +187,46 @@ describe('Maestro', function() {
   
 });
 
-describe('should support China UnionPay')
-describe('should support Switch')
+describe('China UnionPay', function() {
+  var should = chai.should();
+  var checkPrefix = function(prefix){
+    for (var length = 16; length <= 19; length += 1) {
+      (function(length) {
+        it('has a prefix of ' + prefix + ' and a length of ' + length, function(){
+          detectNetwork(prefix + Math.pow(10, length - (prefix.toString().length + 1))).should.equal('China UnionPay');
+        })
+      })(length);
+    };
+  };
+  for (var prefix = 622126; prefix <= 622925; prefix += 1) {
+    checkPrefix(prefix.toString());
+  };
+  for (var prefix = 624; prefix <= 626; prefix += 1) {
+    checkPrefix(prefix.toString());
+  };
+  for (var prefix = 6282; prefix <= 6288; prefix += 1) {
+    checkPrefix(prefix.toString());
+  };
+}); 
+describe('Switch', function() {
+  var should = chai.should();
+  var checkPrefix = function(prefix){
+    for (var length = 16; length <= 19; length += 1) {
+      (function(length) {
+        if (length !== 17) {
+          it('has a prefix of ' + prefix + ' and a length of ' + length, function(){
+            detectNetwork(prefix + Math.pow(10, length - (prefix.toString().length + 1))).should.equal('Switch');
+          })
+        };
+      })(length);
+    };
+  };
+  checkPrefix('4903');
+  checkPrefix('4905');
+  checkPrefix('4911');
+  checkPrefix('4936');
+  checkPrefix('564182');
+  checkPrefix('633110');
+  checkPrefix('6333');
+  checkPrefix('6759');
+})
