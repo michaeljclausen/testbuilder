@@ -149,37 +149,42 @@ describe('Discover', function() {
   it('has a prefix of 6011 and a length of 19', function() {
     detectNetwork('6011111111111111111').should.equal('Discover');
   });
-});
+  
+  for (var prefix = 644; prefix <= 649; prefix++) {
+    (function(prefix) {
+      it('has a prefix of ' + prefix + ' and a length of 16', function() {
+        detectNetwork(prefix + '0000000000000').should.equal('Discover');
+      });
+      it('has a prefix of ' + prefix + ' and a length of 19', function() {
+        detectNetwork(prefix + '0000000000000000').should.equal('Discover');
+      });
+    })(prefix)
+  }
+  it('has a prefix of 65 and a length of 16', function() {
+    detectNetwork('6511111111111111').should.equal('Discover');
+  });
+  it('has a prefix of 65 and a length of 19', function() {
+    detectNetwork('6511111111111111111').should.equal('Discover');
+  });
+}); 
 
 describe('Maestro', function() {
   // Write full test coverage for the Maestro card
   var should = chai.should();
-
-  it('has a prefix of 5018 and length of 12', function() {
-    detectNetwork('501800000000').should.equal('Maestro');
-  });
-
-  it('has a prefix of 5020 and length of 13', function() {
-    detectNetwork('5020000000000').should.equal('Maestro');
-  });
-  it('has a prefix of 5038 and length of 14', function() {
-    detectNetwork('50380000000000').should.equal('Maestro');
-  });
-  it('has a prefix of 6304 and length of 15', function() {
-    detectNetwork('630400000000000').should.equal('Maestro');
-  });
-  it('has a prefix of 6304 and length of 16', function() {
-    detectNetwork('6304000000000000').should.equal('Maestro');
-  });
-  it('has a prefix of 6304 and length of 17', function() {
-    detectNetwork('63040000000000000').should.equal('Maestro');
-  });
-  it('has a prefix of 6304 and length of 18', function() {
-    detectNetwork('630400000000000000').should.equal('Maestro');
-  });
-  it('has a prefix of 6304 and length of 19', function() {
-    detectNetwork('6304000000000000000').should.equal('Maestro');
-  });
+  var checkPrefix = function(prefix){
+    for (var length = 12; length <= 19; length += 1) {
+      (function(length) {
+        it('has a prefix of ' + prefix + ' and a length of ' + length, function(){
+          detectNetwork(prefix + Math.pow(10, length - 5)).should.equal('Maestro');
+        })
+      })(length);
+    };
+  }
+  checkPrefix('5018');
+  checkPrefix('5020');
+  checkPrefix('5038');
+  checkPrefix('6304');
+  
 });
 
 describe('should support China UnionPay')
